@@ -33,6 +33,7 @@ jobs:
           cd ..
       - name: Build engine
         run: |
+          cd src
           flutter/tools/gn --unoptimized --runtime-mode=debug
           flutter/tools/gn --android --unoptimized --runtime-mode=debug
           flutter/tools/gn --android --runtime-mode=profile
