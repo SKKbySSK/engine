@@ -22,7 +22,7 @@ jobs:
         env:
           scheme: ${{ 'default' }}
         run: |
-          echo "solutions=[{\"managed\":False,\"name\":\"src/flutter\",\"url\":\"https://github.com/SKKbySSK/engine.git\",\"custom_deps\":{},\"deps_file\":\"DEPS\",\"safesync_url\":\"\",\"custom_vars\":{\"use_cipd_goma\": True,},}]" > .gclient
+          echo "solutions=[{\"managed\":False,\"name\":\"src/flutter\",\"url\":\"https://github.com/SKKbySSK/engine.git\",\"custom_deps\":{},\"deps_file\":\"DEPS\",\"safesync_url\":\"\",}]" > .gclient
           gclient sync
       - name: Set up remote repo
         run: |
