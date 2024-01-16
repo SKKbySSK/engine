@@ -1,0 +1,41 @@
+name: Build Android Engine
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build Flutter Engine for Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup depot-tools
+        uses: newkdev/setup-depot-tools@v1.0.1
+      - name: Get Ninja
+        uses: turtlesec-no/get-ninja@1.1.0
+      - name: Run gclient
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          echo "solutions=[{\"managed\":False,\"name\":\"src/flutter\",\"url\":\"https://github.com/SKKbySSK/engine.git\",\"custom_deps\":{},\"deps_file\":\"DEPS\",\"safesync_url\":\"\",\"custom_vars\":{\"use_cipd_goma\": True,},}]" > .gclient
+          gclient sync
+      - name: Set up remote repo
+        run: |
+          cd src/flutter
+          git remote add upstream git@github.com:flutter/engine.git
+          git remote rm origin
+          git remote add origin git@github.com:SKKbySSK/engine.git
+          cd ..
+      - name: Build engine
+        run: |
+          flutter/tools/gn --unoptimized --runtime-mode=debug
+          flutter/tools/gn --android --unoptimized --runtime-mode=debug
+          flutter/tools/gn --android --runtime-mode=profile
+          flutter/tools/gn --android --runtime-mode=release
+          cd out
+          find . -mindepth 1 -maxdepth 1 -type d | xargs -n 1 sh -c 'ninja -C $0 || exit 255'
