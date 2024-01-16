@@ -1,0 +1,23 @@
+name: Xcode - Build and Analyze
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build and analyse default scheme using xcodebuild command
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup depot-tools
+        uses: newkdev/setup-depot-tools@v1.0.1
+      - name: Setup Environment
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          gclient sync
