@@ -1,4 +1,4 @@
-name: Xcode - Build and Analyze
+name: Build iOS Engine
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v4.0.0
         with:
-          java-version: 8
+          java-version: 17
           distribution: oracle
       - name: Get Ninja
         uses: turtlesec-no/get-ninja@1.1.0
