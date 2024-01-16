@@ -19,7 +19,7 @@ jobs:
       - name: Setup Environment
         env:
           scheme: ${{ 'default' }}
-        run: cat "solutions=[{\"managed\":False,\"name\":\"src/flutter\",\"url\":\"git@github.com:SKKbySSK/engine.git\",\"custom_deps\":{},\"deps_file\":\"DEPS\",\"safesync_url\":\"\"}]" > .gclient
         run: |
+          cat "solutions=[{\"managed\":False,\"name\":\"src/flutter\",\"url\":\"git@github.com:SKKbySSK/engine.git\",\"custom_deps\":{},\"deps_file\":\"DEPS\",\"safesync_url\":\"\"}]" > .gclient
           gclient configure
           gclient sync
